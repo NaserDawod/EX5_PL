@@ -56,9 +56,5 @@ let rec reduce_cbn t = match t with
 			Some (Application (get_val (reduce_cbn t'), s))
 		| _ -> None;;
 
-let rec evaluate verbose func t = if verbose then (print_string t); 
-			(let t_tag = (func t) in match t_tag with
-								| None -> ()
-								| _ -> evaluate verbose func (get_val t_tag));;
 
 

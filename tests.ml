@@ -3,7 +3,6 @@
 
   EXTEND THIS FILE TO TEST YOUR SOLUTION THOROUGHLY!
 *)
-print_string "sdfsd\n";
 
 open Utils
 open Parser
@@ -55,7 +54,19 @@ let s6 = "let id = (\\x.(x)) in
 let omega = ((\\x. (x x)) (\\x. (x x))) in
 ((\\x. (\\y. (x))) (id omega))";;
 
-printf "\nCall By Value Tests\n\n";
+
+printf "\nFree VAriabels Tests\n";;
+let t1 = "((\\x.(\\y.(a y))) (\\z.z))";;
+let t2 = "((\\x.(\\y.(x y))) (\\z.(c v)))";;
+let t3 = "(((\\x.(\\y.(x y))) (\\z.(c v))) (\\b.(b f)))";;
+printf "\nEvaluating:\n%s\n" t1;
+print_string_set (fv (parse t1));;
+printf "\nEvaluating:\n%s\n" t2;
+print_string_set (fv (parse t2));;
+printf "\nEvaluating:\n%s\n" t3;
+print_string_set (fv (parse t3));;
+printf "\n***********************************************************************\n
+Call By Value Tests\n\n";
 
 printf "\nEvaluating:\n%s\nin cbv semantics:\n\n" s1;
 ignore (evaluate ~verbose:true reduce_cbv (parse s1));
@@ -72,8 +83,12 @@ ignore (evaluate ~verbose:true reduce_cbv (parse s4));;
 printf "\nEvaluating:\n%s\nin cbv semantics:\n\n" s5;
 ignore (evaluate ~verbose:true reduce_cbv (parse s5));;
 
+printf "\nEvaluating:\n%s\nin cbv semantics:\n\n" t2;
+ignore (evaluate ~verbose:true reduce_cbv (parse t2));;
 
-printf "\nCall By Name Tests\n\n";
+
+printf "\n************************************************************
+\nCall By Name Tests\n\n";
 
 printf "\nEvaluating:\n%s\nin cbn semantics:\n\n" s1;
 ignore (evaluate ~verbose:true reduce_cbn (parse s1));
@@ -92,3 +107,4 @@ ignore (evaluate ~verbose:true reduce_cbn (parse s5));;
 
 printf "\nEvaluating:\n%s\nin cbn semantics:\n\n" s6;
 ignore (evaluate ~verbose:true reduce_cbn (parse s6));;
+
